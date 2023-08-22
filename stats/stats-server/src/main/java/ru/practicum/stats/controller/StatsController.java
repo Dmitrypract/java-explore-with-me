@@ -1,6 +1,7 @@
 package ru.practicum.stats.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.stats.dto.EndpointHitRequestDto;
 import ru.practicum.stats.dto.EndpointHitResponseDto;
@@ -14,6 +15,8 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping
 @RequiredArgsConstructor
+@Validated
+@Valid
 public class StatsController {
 
     private final EndpointHitService endpointHitService;
