@@ -23,8 +23,8 @@ services:
       - POSTGRES_PASSWORD=root
 
   ewm-service:
-    build: main-service
-    container_name: main-service
+    build: etm-service
+    container_name: etm-service
     ports:
       - "8080:8080"
     depends_on:
