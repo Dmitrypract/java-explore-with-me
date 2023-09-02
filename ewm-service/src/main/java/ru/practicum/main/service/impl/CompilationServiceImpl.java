@@ -11,7 +11,7 @@ import ru.practicum.main.dto.request.UpdateCompilationRequest;
 import ru.practicum.main.entity.Compilation;
 import ru.practicum.main.entity.Event;
 import ru.practicum.main.entity.Request;
-import ru.practicum.main.entity.enums.EventRequestStatus;
+import ru.practicum.main.entity.enums.RequestStatus;
 import ru.practicum.main.exception.NotFoundException;
 import ru.practicum.main.mapper.CompilationMapper;
 import ru.practicum.main.repository.CompilationRepository;
@@ -33,22 +33,19 @@ public class CompilationServiceImpl implements CompilationService {
 
     @Override
     @Transactional(readOnly = true)
-    public Collection<CompilationDto> getAllCompilations(Pageable pageable) {
-        //return compilationRepository.findAll(pageable).getContent();
+    public Collection<CompilationDto> getAllCompilations(Pageable pageable, Boolean pinned) {
+        List<Compilation> result = pinned != null
+                ? compilationRepository.findByPinned(pinned, pageable)
+                : compilationRepository.findAll(pageable).getContent();
 
-        return compilationRepository.findAll(pageable).getContent()
-                .stream()
+        return result.stream()
                 .map(this::toCompilationDto)
                 .collect(Collectors.toList());
-
     }
 
     @Override
     @Transactional(readOnly = true)
     public CompilationDto getCompilationById(Long compId) {
-        /*return compilationRepository.findById(compId).orElseThrow(() ->
-                new NotFoundException(String.format("Compilation %s not found", compId)));*/
-
         Compilation compilation = compilationRepository.findById(compId).orElseThrow(() ->
                 new NotFoundException(String.format("Compilation %s not found", compId)));
 
@@ -57,13 +54,6 @@ public class CompilationServiceImpl implements CompilationService {
 
     @Override
     public CompilationDto saveCompilation(NewCompilationDto newCompilationDto) {
-        /*List<Event> newEvents = eventRepository.findAllById(newCompilationDto.getEvents());
-
-        Compilation savedCompilation = compilationRepository.save(
-                compilationMapper.toCompilation(newCompilationDto, newEvents));
-
-        return compilationMapper.toCompilationDto(savedCompilation);*/
-
         Compilation compilation = compilationMapper.toCompilation(newCompilationDto);
 
         Set<Long> eventsId = newCompilationDto.getEvents();
@@ -90,7 +80,7 @@ public class CompilationServiceImpl implements CompilationService {
         Compilation toUpdate = compilationRepository.findById(compId).orElseThrow(() ->
                 new NotFoundException(String.format("Compilation %s not found", compId)));
 
-        if (!dto.getTitle().isBlank()) {
+        if (dto.getTitle() != null && !dto.getTitle().isBlank()) {
             toUpdate.setTitle(dto.getTitle());
         }
         if (dto.getPinned() != null) {
@@ -104,14 +94,12 @@ public class CompilationServiceImpl implements CompilationService {
         }
 
         return toCompilationDto(toUpdate);
-
-        /*return compilationMapper.toCompilationDto(
-                compilationRepository.save(toUpdate));*/
     }
 
     private CompilationDto toCompilationDto(Compilation compilation) {
         CompilationDto dto = compilationMapper.toCompilationDto(compilation);
         setConfirmedRequestsToEvent(dto);
+
         return dto;
     }
 
@@ -123,12 +111,14 @@ public class CompilationServiceImpl implements CompilationService {
             compilationEvents.forEach(el -> eventIds.add(el.getId()));
 
             List<Request> confirmedRequests = requestRepository.findAllByStatusAndEventIdIn(
-                    EventRequestStatus.CONFIRMED, eventIds);
+                    RequestStatus.CONFIRMED, eventIds);
+
             Map<Long, Long> requests = confirmedRequests.stream()
                     .collect(Collectors.groupingBy(request -> request.getEvent().getId()))
                     .entrySet()
                     .stream()
                     .collect(Collectors.toMap(Map.Entry::getKey, e -> (long) e.getValue().size()));
+
             compilationEvents.forEach(eventShortDto ->
                     eventShortDto.setConfirmedRequests(requests.getOrDefault(eventShortDto.getId(), 0L)));
         }

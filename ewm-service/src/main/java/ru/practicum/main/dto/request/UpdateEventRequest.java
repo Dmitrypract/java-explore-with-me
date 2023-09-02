@@ -1,15 +1,15 @@
-package ru.practicum.main.dto.event;
+package ru.practicum.main.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.practicum.main.dto.category.CategoryDto;
+import org.hibernate.validator.constraints.Length;
 import ru.practicum.main.dto.location.LocationDtoCoordinates;
-import ru.practicum.main.dto.user.UserShortDto;
-import ru.practicum.main.entity.enums.EventStatus;
+import ru.practicum.main.validation.EventDateValidator;
 
+import javax.validation.Valid;
+import javax.validation.constraints.PositiveOrZero;
 import java.time.LocalDateTime;
 
 import static ru.practicum.Constant.TIME_PATTERN;
@@ -17,42 +17,29 @@ import static ru.practicum.Constant.TIME_PATTERN;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder(toBuilder = true)
-public class EventFullDto {
-    private Long id;
-
+public class UpdateEventRequest {
+    @Length(min = 20, max = 2000)
     private String annotation;
 
-    private CategoryDto category;
+    private Long category;
 
-    private Long confirmedRequests;
-
-    @JsonFormat(pattern = TIME_PATTERN)
-    private LocalDateTime createdOn;
-
+    @Length(min = 20, max = 7000)
     private String description;
 
     @JsonFormat(pattern = TIME_PATTERN)
+    @EventDateValidator
     private LocalDateTime eventDate;
 
-    private UserShortDto initiator;
-
+    @Valid
     private LocationDtoCoordinates location;
 
     private Boolean paid;
 
+    @PositiveOrZero
     private Long participantLimit;
-
-    @JsonFormat(pattern = TIME_PATTERN)
-    private LocalDateTime publishedOn;
 
     private Boolean requestModeration;
 
-    private EventStatus published;
-
+    @Length(min = 3, max = 120)
     private String title;
-
-    private Long views;
-
-    private EventStatus state;
 }

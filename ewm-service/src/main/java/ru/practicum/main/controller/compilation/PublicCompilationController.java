@@ -1,4 +1,4 @@
-package ru.practicum.main.controller.publicController;
+package ru.practicum.main.controller.compilation;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -8,7 +8,6 @@ import ru.practicum.main.dto.compilation.CompilationDto;
 import ru.practicum.main.service.CompilationService;
 import ru.practicum.main.util.OffsetBasedPageRequest;
 
-import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 import java.util.Collection;
@@ -20,15 +19,15 @@ import static ru.practicum.Constant.PAGE_DEFAULT_SIZE;
 @RequestMapping("/compilations")
 @RequiredArgsConstructor
 @Validated
-@Valid
 public class PublicCompilationController {
     private final CompilationService compilationService;
 
     @GetMapping
     public Collection<CompilationDto> getAllCompilations(@RequestParam(defaultValue = PAGE_DEFAULT_FROM) @PositiveOrZero Integer from,
-                                                         @RequestParam(defaultValue = PAGE_DEFAULT_SIZE) @Positive Integer size) {
+                                                         @RequestParam(defaultValue = PAGE_DEFAULT_SIZE) @Positive Integer size,
+                                                         @RequestParam(required = false) Boolean pinned) {
         Pageable page = new OffsetBasedPageRequest(from, size);
-        return compilationService.getAllCompilations(page);
+        return compilationService.getAllCompilations(page, pinned);
     }
 
     @GetMapping("/{compId}")

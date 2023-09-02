@@ -1,4 +1,4 @@
-package ru.practicum.main.controller.adminController;
+package ru.practicum.main.controller.category;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,7 +16,6 @@ import javax.validation.constraints.Positive;
 @RestController
 @RequestMapping("/admin/categories")
 @RequiredArgsConstructor
-@Valid
 @Validated
 public class AdminCategoryController {
     private final CategoryService categoryService;

@@ -1,4 +1,4 @@
-package ru.practicum.main.controller.adminController;
+package ru.practicum.main.controller.user;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -25,7 +25,6 @@ import static ru.practicum.Constant.PAGE_DEFAULT_SIZE;
 @RestController
 @RequestMapping("/admin/users")
 @RequiredArgsConstructor
-@Valid
 @Validated
 public class AdminUserController {
     private final UserService userService;

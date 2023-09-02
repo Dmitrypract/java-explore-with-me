@@ -1,4 +1,4 @@
-package ru.practicum.main.controller.publicController;
+package ru.practicum.main.controller.event;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -12,7 +12,6 @@ import ru.practicum.main.service.EventService;
 import ru.practicum.main.util.OffsetBasedPageRequest;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 import java.time.LocalDateTime;
@@ -25,7 +24,6 @@ import static ru.practicum.Constant.*;
 @RequestMapping("/events")
 @RequiredArgsConstructor
 @Validated
-@Valid
 public class PublicEventController {
     private final EventService eventService;
 

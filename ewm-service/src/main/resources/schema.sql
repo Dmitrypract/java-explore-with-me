@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS categories, users, locations, events, participation_requests, compilations, events_compilations CASCADE;
+DROP TABLE IF EXISTS locations, users, categories, events, requests, compilations, events_compilations CASCADE;
 
 CREATE TABLE IF NOT EXISTS locations
 (
@@ -44,7 +44,8 @@ CREATE TABLE IF NOT EXISTS requests
     created      TIMESTAMP  NOT NULL,
     status       VARCHAR(9) NOT NULL,
     event_id     BIGINT REFERENCES events (id) ON DELETE CASCADE,
-    requester_id BIGINT REFERENCES users (id) ON DELETE CASCADE
+    requester_id BIGINT REFERENCES users (id) ON DELETE CASCADE,
+    CONSTRAINT uq_request UNIQUE (event_id, requester_id)
 );
 
 CREATE TABLE IF NOT EXISTS compilations

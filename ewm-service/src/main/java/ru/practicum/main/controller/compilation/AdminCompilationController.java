@@ -1,4 +1,4 @@
-package ru.practicum.main.controller.adminController;
+package ru.practicum.main.controller.compilation;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,7 +15,6 @@ import javax.validation.constraints.Positive;
 @RestController
 @RequestMapping("/admin/compilations")
 @RequiredArgsConstructor
-@Valid
 @Validated
 public class AdminCompilationController {
     private final CompilationService compilationService;

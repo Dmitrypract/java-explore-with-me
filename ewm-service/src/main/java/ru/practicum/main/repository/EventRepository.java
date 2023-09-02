@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import ru.practicum.main.entity.Event;
-import ru.practicum.main.entity.enums.EventPublishedStatus;
+import ru.practicum.main.entity.enums.EventStatus;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
@@ -14,11 +14,11 @@ import java.util.Optional;
 import java.util.Set;
 
 public interface EventRepository extends JpaRepository<Event, Long> {
+    boolean existsByCategoryId(Long categoryId);
+
     List<Event> findAllByInitiator_Id(Long id, Pageable pageable);
 
     List<Event> findAllByIdIn(Collection<Long> eventsId);
-
-    List<Event> findAllByCategoryId(Long categoryId);
 
     @Query("select e" +
             " from Event e" +
@@ -34,7 +34,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
             "and (coalesce(:rangeStart, null) is null or e.eventDate >= :rangeStart) " +
             "and (coalesce(:rangeEnd, null) is null or e.eventDate <= :rangeEnd) ")
     List<Event> findByAdmin(@Param("userIds") Collection<Long> userIds,
-                            @Param("states") Collection<EventPublishedStatus> states,
+                            @Param("states") Collection<EventStatus> states,
                             @Param("categoryIds") Collection<Long> categoryIds,
                             @Param("rangeStart") LocalDateTime rangeStart,
                             @Param("rangeEnd") LocalDateTime rangeEnd,
@@ -58,4 +58,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
                               @Param("paid") Boolean paid, @Param("rangeStart") LocalDateTime rangeStart,
                               @Param("rangeEnd") LocalDateTime rangeEnd, @Param("onlyAvailable") Boolean onlyAvailable,
                               Pageable pageable);
+
+    @Query("SELECT MIN(e.publishedOn) FROM Event e WHERE e.id IN :eventsId")
+    Optional<LocalDateTime> getStart(@Param("eventsId") Collection<Long> eventsId);
 }

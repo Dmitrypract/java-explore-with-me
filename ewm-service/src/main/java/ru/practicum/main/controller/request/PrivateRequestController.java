@@ -1,4 +1,4 @@
-package ru.practicum.main.controller.privateController;
+package ru.practicum.main.controller.request;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -9,7 +9,6 @@ import ru.practicum.main.entity.Request;
 import ru.practicum.main.mapper.RequestMapper;
 import ru.practicum.main.service.RequestService;
 
-import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -18,7 +17,6 @@ import java.util.stream.Collectors;
 @RequestMapping("/users/{userId}/requests")
 @RequiredArgsConstructor
 @Validated
-@Valid
 public class PrivateRequestController {
     private final RequestService requestService;
     private final RequestMapper requestMapper;

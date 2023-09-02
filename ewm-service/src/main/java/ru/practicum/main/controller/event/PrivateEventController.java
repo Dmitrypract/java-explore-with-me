@@ -1,4 +1,4 @@
-package ru.practicum.main.controller.privateController;
+package ru.practicum.main.controller.event;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -27,7 +27,6 @@ import static ru.practicum.Constant.PAGE_DEFAULT_SIZE;
 @RequestMapping("/users/{userId}/events")
 @RequiredArgsConstructor
 @Validated
-@Valid
 public class PrivateEventController {
     private final EventService eventService;
 

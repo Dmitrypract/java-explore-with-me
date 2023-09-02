@@ -1,7 +1,7 @@
 package ru.practicum.main.entity;
 
 import lombok.*;
-import ru.practicum.main.entity.enums.EventRequestStatus;
+import ru.practicum.main.entity.enums.RequestStatus;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -30,9 +30,10 @@ public class Request {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "requester_id")
+    @ToString.Exclude
     private User requester;
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
-    private EventRequestStatus status;
+    private RequestStatus status;
 }

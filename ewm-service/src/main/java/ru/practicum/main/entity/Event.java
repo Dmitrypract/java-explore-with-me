@@ -1,7 +1,7 @@
 package ru.practicum.main.entity;
 
 import lombok.*;
-import ru.practicum.main.entity.enums.EventPublishedStatus;
+import ru.practicum.main.entity.enums.EventStatus;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -58,24 +58,11 @@ public class Event {
 
     @Column(name = "state")
     @Enumerated(EnumType.STRING)
-    private EventPublishedStatus state;
+    private EventStatus state;
 
     @Column(name = "created_on")
     private LocalDateTime createdOn;
 
     @Column(name = "published_on")
     private LocalDateTime publishedOn;
-
-    @PrePersist
-    public void prePersist() {
-        /*if (paid == null) {
-            paid = false;
-        }
-        if (participantLimit == null) {
-            participantLimit = 0;
-        }*/
-        if (requestModeration == null) {
-            requestModeration = true;
-        }
-    }
 }
