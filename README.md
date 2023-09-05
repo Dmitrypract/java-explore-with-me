@@ -20,7 +20,7 @@ main-service - основная часть приложения, в которо
 Необходимо настроенная система виртуализации, установленный Docker Desktop(скачать и установить можно с официального сайта https://www.docker.com/products/docker-desktop/)
 
 Клонируйте репозиторий проекта на свою локальную машину:
-git clone git@github.com:dmitrypract/java-explore-with-me.git
+git clone git@github.com:Dmitrypract/java-explore-with-me.git
 Запустите командную строку и перейдите в корень директории с проектом.
 Соберите проект
 mvn clean package
@@ -35,7 +35,7 @@ $  docker-compose up
 
 Клонируйте репозиторий проекта на свою локальную машину:
 
-git clone git@github.com:danyyyaa/java-explore-with-me.git
+git clone git@github.com:Dmitrypract/java-explore-with-me.git
 Откройте проект в вашей IDE.
 
 Настройте файл application.properties, расположенный в директории src/main/resources, чтобы указать данные для подключения к вашей базе данных PostgreSQL.
