@@ -20,7 +20,7 @@ main-service - основная часть приложения, в которо
 Необходимо настроенная система виртуализации, установленный Docker Desktop(скачать и установить можно с официального сайта https://www.docker.com/products/docker-desktop/)
 
 Клонируйте репозиторий проекта на свою локальную машину:
-git clone git@github.com:danyyyaa/java-explore-with-me.git
+git clone git@github.com:dmitrypract/java-explore-with-me.git
 Запустите командную строку и перейдите в корень директории с проектом.
 Соберите проект
 mvn clean package
