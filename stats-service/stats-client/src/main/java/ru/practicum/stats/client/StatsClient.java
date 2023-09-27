@@ -27,7 +27,6 @@ public class StatsClient {
 
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(TIME_PATTERN);
 
-
     public void createHit(EndpointHitRequestDto endpointHitRequestDto) {
         restTemplate.postForLocation(serverUrl.concat("/hit"), endpointHitRequestDto);
     }
