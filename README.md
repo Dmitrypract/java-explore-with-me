@@ -26,17 +26,19 @@ main-service - основная часть приложения, в которо
 
 
 Установка и запуск проекта
+
 1 вариант:
 Необходимо настроенная система виртуализации, установленный Docker Desktop(скачать и установить можно с официального сайта https://www.docker.com/products/docker-desktop/)
 
 Клонируйте репозиторий проекта на свою локальную машину:
-git clone git@github.com:danyyyaa/java-explore-with-me.git
+git clone git@github.com:Dmitrypract/java-explore-with-me.git
 Запустите командную строку и перейдите в корень директории с проектом.
 Соберите проект
 mvn clean package
 Введите следующую команду, которая подготовит и запустит приложение на вашей локальной машине
 $  docker-compose up
 Приложение будет запущено на порту 8080. Вы можете открыть свой веб-браузер и перейти по адресу http://localhost:8080, чтобы получить доступ к приложению ExploreWithMe.
+
 2 вариант:
 Установите Java Development Kit (JDK) версии 11 или выше, если у вас его еще нет.
 
@@ -44,7 +46,7 @@ $  docker-compose up
 
 Клонируйте репозиторий проекта на свою локальную машину:
 
-git clone git@github.com:danyyyaa/java-explore-with-me.git
+git clone git@github.com:Dmitrypract/java-explore-with-me.git
 Откройте проект в вашей IDE.
 
 Настройте файл application.properties, расположенный в директории src/main/resources, чтобы указать данные для подключения к вашей базе данных PostgreSQL.
